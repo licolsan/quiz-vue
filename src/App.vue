@@ -13,6 +13,7 @@
             :currentQuestion="questions[index]"
             :next="next"
             :increase="increase"
+            :index="index"
           />
         </b-col>
       </b-row>
@@ -48,7 +49,9 @@ export default {
       this.numTotal++
     },
     next: function() {
-      this.index++
+      if (this.index < 9) {
+        this.index++
+      }
     }
   },
   mounted: function() {

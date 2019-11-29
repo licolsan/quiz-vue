@@ -1,6 +1,7 @@
 <template>
   <b-jumbotron>
     <template v-slot:lead>
+      <h3>Question No. {{ index + 1 }}</h3>
       {{ currentQuestion.question }}
     </template>
 
@@ -23,7 +24,13 @@
     >
       Submit
     </b-button>
-    <b-button variant="success" href="#" @click="next">Next</b-button>
+    <b-button
+      variant="success"
+      @click="next"
+      :disabled="isOver"
+    >
+      Next
+    </b-button>
   </b-jumbotron>
 </template>
 
@@ -37,7 +44,10 @@ export default {
         ...this.currentQuestion.incorrect_answers,
         this.currentQuestion.correct_answer
       ]
-    }
+    },
+    isOver() {
+      return this.index >= 9
+    },
   },
   data: function() {
     return {
@@ -66,7 +76,6 @@ export default {
       this.correctIndex = this.shuffledAnswers.indexOf(this.currentQuestion.correct_answer)
     },
     submitAnswer: function() {
-      // const isCorrect = (this.selectedIndex === this.correctIndex) ? true : false
       this.increase(this.selectedIndex === this.correctIndex)
       this.answered = true
     }
@@ -77,7 +86,8 @@ export default {
   props: {
     currentQuestion: Object,
     next: Function,
-    increase: Function
+    increase: Function,
+    index: Number
   },
   watch: {
     currentQuestion: function() {
