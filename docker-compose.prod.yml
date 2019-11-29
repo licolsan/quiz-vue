@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web_app:
+    build:
+      context: .
+      dockerfile: ./docker/prod.Dockerfile
+    image: quiz_vue:prod
+    container_name: quiz_vue
+    ports:
+      - 5000:80
+    tty: true
+
+networks:
+  default:
+    external:
+      name: vue-learning-network
